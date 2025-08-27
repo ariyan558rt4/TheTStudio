@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>استودیوی فیروزه | TTS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0f172a;           /* slate-900 */
+      --card:#111827;         /* gray-900 */
+      --muted:#94a3b8;        /* slate-400 */
+      --text:#e5e7eb;         /* gray-200 */
+      --brand:#00bcd4;        /* cyan-500 */
+      --accent:#22d3ee;       /* cyan-400 */
+      --btn1:#6366f1;         /* indigo-500 */
+      --btn2:#ef4444;         /* red-500 */
+      --btn3:#10b981;         /* emerald-500 */
+      --ring: rgba(34,211,238,.6);
+      --radius: 18px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background: radial-gradient(1200px 600px at 20% -10%, rgba(34,211,238,.15), transparent),
+                        radial-gradient(900px 500px at 90% 10%, rgba(99,102,241,.12), transparent),
+                        var(--bg);
+      color:var(--text); font-family:"Vazirmatn", system-ui, sans-serif;
+      line-height:1.9;
+    }
+    a{color:inherit}
+    .container{max-width:1100px; margin:0 auto; padding:24px}
+    .nav{
+      display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+      padding:16px 24px; position:sticky; top:0; backdrop-filter: blur(8px);
+      background: rgba(15,23,42,.55); border-bottom:1px solid rgba(148,163,184,.15); z-index:50;
+    }
+    .badge{font-weight:700; font-size:14px; color:var(--muted)}
+    .title{font-size:56px; font-weight:800; letter-spacing:.5px; margin:6px 0 4px}
+    .subtitle{color:var(--muted); margin:0 0 22px}
+
+    .hero{
+      display:grid; grid-template-columns:1.1fr .9fr; gap:24px; align-items:center; padding:60px 24px 36px;
+    }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.0));
+      border:1px solid rgba(148,163,184,.18);
+      padding:28px; border-radius: var(--radius); box-shadow: 0 10px 40px rgba(0,0,0,.25);
+    }
+    .brand{font-size:80px; font-weight:900; letter-spacing:2px; margin:0; background:linear-gradient(90deg, var(--brand), var(--accent)); -webkit-background-clip:text; background-clip:text; color:transparent}
+
+    .btns{display:flex; flex-wrap:wrap; gap:12px}
+    .btn{
+      appearance:none; border:none; padding:12px 18px; border-radius:16px; color:white; font-weight:700; cursor:pointer;
+      box-shadow: 0 6px 24px rgba(0,0,0,.25); transition: transform .15s ease, box-shadow .2s ease, filter .2s ease;
+      outline: none; position:relative;
+    }
+    .btn:focus{ box-shadow:0 0 0 6px var(--ring) }
+    .btn:hover{ transform: translateY(-2px); filter:saturate(1.2) }
+    .btn:active{ transform: translateY(0) }
+
+    .btn-primary{ background:linear-gradient(135deg, var(--btn1), #7c3aed) }
+    .btn-danger{ background:linear-gradient(135deg, var(--btn2), #f97316) }
+    .btn-success{ background:linear-gradient(135deg, var(--btn3), #14b8a6) }
+
+    .divider{height:1px; background:linear-gradient(90deg, transparent, rgba(148,163,184,.2), transparent); margin:24px 0}
+
+    .about{scroll-margin-top:110px}
+    .about h3{margin:0 0 10px}
+    .about .card{display:flex; gap:18px; align-items:flex-start}
+    .bullet{width:10px; height:10px; margin-top:10px; border-radius:50%; background:linear-gradient(135deg, var(--accent), var(--brand))}
+
+    /* Views */
+    .view{display:none}
+    .view.active{display:block}
+
+    /* Lessons page */
+    .lessons-grid{display:grid; grid-template-columns:1fr; gap:16px}
+    .tabbar{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:12px}
+    .tab{padding:10px 14px; border-radius:12px; border:1px solid rgba(148,163,184,.25); cursor:pointer; font-weight:700}
+    .tab.active{background:linear-gradient(135deg, #0ea5e9, #22d3ee); color:white; border-color:transparent}
+
+    pre{background:#0b1220; color:#d1d5db; padding:16px; border-radius:14px; overflow:auto; border:1px solid rgba(148,163,184,.18)}
+    code{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size:13.5px}
+
+    /* Calculator */
+    .calc{display:grid; grid-template-columns:repeat(4, minmax(60px, 1fr)); gap:10px; max-width:360px}
+    .calc input{grid-column: 1 / -1; padding:12px 10px; border-radius:12px; border:1px solid rgba(148,163,184,.25); background:#0b1220; color:#e5e7eb}
+    .calc button{padding:12px; border:none; border-radius:12px; font-weight:800; cursor:pointer; background:#1f2937; color:#e5e7eb; box-shadow: inset 0 -2px 0 rgba(255,255,255,.05)}
+    .calc button:hover{filter:brightness(1.15)}
+    .calc .op{background:#0ea5e9; color:white}
+    .calc .eq{background:#22c55e; color:white}
+    .calc .clear{background:#ef4444; color:white}
+
+    footer{padding:36px 24px; color:var(--muted); text-align:center}
+
+    @media (max-width: 900px){
+      .hero{grid-template-columns:1fr}
+      .brand{font-size:64px}
+      .title{font-size:40px}
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVBAR / HEADER -->
+  <header class="nav">
+    <div class="badge">صفحهٔ اصلی</div>
+    <nav class="btns" aria-label="پیوندهای اصلی">
+      <button class="btn btn-primary" onclick="scrollToAbout()">دربارهٔ ما</button>
+      <a class="btn btn-danger" href="https://www.youtube.com/@TheTurquoiseStudio_TTS" target="_blank" rel="noopener noreferrer">کانال یوتیوب</a>
+      <button class="btn btn-success" onclick="openLessons()">آموزش‌ها</button>
+    </nav>
+  </header>
+
+  <!-- MAIN VIEW -->
+  <main id="view-home" class="view active">
+    <section class="hero container">
+      <div class="card">
+        <p class="subtitle">به سایت رسمی استودیوی فیروزه خوش اومدید</p>
+        <h1 class="brand" aria-label="TTS">TTS</h1>
+        <h2 class="title">استودیوی فیروزه</h2>
+        <p style="margin-top:10px; color:var(--muted)">یک تیم نرم‌افزاری جوان با تمرکز روی ساخت اپلیکیشن و آموزش.</p>
+        <div class="divider"></div>
+        <div class="btns">
+          <button class="btn btn-primary" onclick="scrollToAbout()">دربارهٔ ما</button>
+          <a class="btn btn-danger" href="https://www.youtube.com/@TheTurquoiseStudio_TTS" target="_blank" rel="noopener noreferrer">کانال یوتیوب</a>
+          <button class="btn btn-success" onclick="openLessons()">آموزش‌ها</button>
+        </div>
+      </div>
+
+      <div class="card" style="display:grid; place-items:center; min-height:220px">
+        <div style="text-align:center">
+          <div style="font-size:14px; color:var(--muted); margin-bottom:6px">لوگوی نوشتاری</div>
+          <div class="brand">TTS</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="about container">
+      <div class="card">
+        <div class="bullet"></div>
+        <div>
+          <h3>دربارهٔ ما</h3>
+          <p>استودیوی فیروزه یه گروه برنامه‌نویسی هست که سال ۱۴۰۴ تأسیس شده و هدفش ساخت برنامه و آموزش هست.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- LESSONS VIEW -->
+  <main id="view-lessons" class="view">
+    <section class="container">
+      <div class="card">
+        <div class="tabbar">
+          <button id="tab-guide" class="tab active" onclick="switchTab('guide')">آموزش‌ها</button>
+          <button id="tab-codes" class="tab" onclick="switchTab('codes')">کُدها</button>
+          <button class="tab" onclick="openHome()">بازگشت به صفحهٔ اصلی ↩︎</button>
+        </div>
+
+        <!-- GUIDE TAB -->
+        <div id="panel-guide" class="lessons-grid">
+          <h3 style="margin:0">راهنمای کوتاه VS Code</h3>
+          <ol style="margin-top:6px">
+            <li><strong>نصب افزونه‌ها:</strong> از نوار کناری روی آیکن Extensions بزن و افزونه‌های «Persian RTL Support» و «Prettier» رو نصب کن.</li>
+            <li><strong>ساخت پروژهٔ سریع:</strong> کلیدهای <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> رو بزن، بنویس <em>New File</em> و یک فایل <code>index.html</code> بساز. تایپ کن <code>!</code> و Enter تا قالب HTML ساخته بشه.</li>
+            <li><strong>اجرای زنده:</strong> افزونهٔ «Live Server» رو نصب کن و روی فایل راست‌کلیک > <em>Open with Live Server</em> تا سایتت محلی اجرا بشه.</li>
+            <li><strong>فرمت خودکار:</strong> از Status Bar آیکن Prettier رو فعال کن تا کدت مرتب بشه. کلید میانبر: <kbd>Shift</kbd>+<kbd>Alt</kbd>+<kbd>F</kbd>.</li>
+            <li><strong>میانبرها:</strong> ترمینال یکپارچه: <kbd>Ctrl</kbd>+<kbd>`</kbd>، جستجو در پروژه: <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>F</kbd>.</li>
+          </ol>
+        </div>
+
+        <!-- CODES TAB -->
+        <div id="panel-codes" class="lessons-grid" style="display:none">
+          <h3 style="margin:0">ماشین‌حساب ساده (نمونه کُد + نسخهٔ اجرایی)</h3>
+
+          <div class="calc" role="region" aria-label="ماشین‌حساب">
+            <input id="calc-display" type="text" placeholder="۰" inputmode="decimal" aria-label="نمایش‌گر" />
+            <button class="clear" onclick="calcClear()">C</button>
+            <button onclick="calcInput('(')">(</button>
+            <button onclick="calcInput(')')">)</button>
+            <button class="op" onclick="calcInput('/')">÷</button>
+            <button onclick="calcInput('7')">7</button>
+            <button onclick="calcInput('8')">8</button>
+            <button onclick="calcInput('9')">9</button>
+            <button class="op" onclick="calcInput('*')">×</button>
+            <button onclick="calcInput('4')">4</button>
+            <button onclick="calcInput('5')">5</button>
+            <button onclick="calcInput('6')">6</button>
+            <button class="op" onclick="calcInput('-')">−</button>
+            <button onclick="calcInput('1')">1</button>
+            <button onclick="calcInput('2')">2</button>
+            <button onclick="calcInput('3')">3</button>
+            <button class="op" onclick="calcInput('+')">+</button>
+            <button onclick="calcInput('0')">0</button>
+            <button onclick="calcInput('.')">.</button>
+            <button class="eq" onclick="calcEval()">=</button>
+          </div>
+
+          <details>
+            <summary style="cursor:pointer; margin-top:10px">نمایش کُد ماشین‌حساب</summary>
+            <pre><code>&lt;div class="calc"&gt;
+  &lt;input id="calc-display" type="text" /&gt;
+  &lt;button onclick="calcClear()"&gt;C&lt;/button&gt;
+  &lt;!-- ... سایر دکمه‌ها ... --&gt;
+  &lt;button class="eq" onclick="calcEval()"&gt;=&lt;/button&gt;
+&lt;/div&gt;
+&lt;script&gt;
+  const display = document.getElementById('calc-display');
+  function calcInput(v){ display.value += v }
+  function calcClear(){ display.value = '' }
+  function calcEval(){ try{ display.value = Function('return '+display.value)() } catch{ alert('ورودی نامعتبر!') } }
+&lt;/script&gt;</code></pre>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    ساخته‌شده با ♥ توسط استودیوی فیروزه — ۱۴۰۴
+  </footer>
+
+  <script>
+    // Smooth scroll to About
+    function scrollToAbout(){
+      document.getElementById('about').scrollIntoView({behavior:'smooth'});
+    }
+
+    // View switching
+    function openLessons(){
+      document.getElementById('view-home').classList.remove('active');
+      document.getElementById('view-lessons').classList.add('active');
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
+    function openHome(){
+      document.getElementById('view-lessons').classList.remove('active');
+      document.getElementById('view-home').classList.add('active');
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
+
+    // Tabs inside Lessons
+    function switchTab(which){
+      const guideBtn = document.getElementById('tab-guide');
+      const codesBtn = document.getElementById('tab-codes');
+      const guide = document.getElementById('panel-guide');
+      const codes = document.getElementById('panel-codes');
+      if(which==='guide'){
+        guideBtn.classList.add('active');
+        codesBtn.classList.remove('active');
+        guide.style.display='grid';
+        codes.style.display='none';
+      } else {
+        codesBtn.classList.add('active');
+        guideBtn.classList.remove('active');
+        guide.style.display='none';
+        codes.style.display='grid';
+      }
+    }
+
+    // Calculator logic
+    const display = (()=> document.getElementById('calc-display'))();
+    function calcInput(v){ if(display) display.value += v }
+    function calcClear(){ if(display) display.value = '' }
+    function calcEval(){
+      if(!display) return;
+      try{
+        // Using Function constructor instead of eval for slightly cleaner scoping
+        const result = Function('return ('+ display.value +')')();
+        if(Number.isFinite(result)) display.value = result; else throw new Error('bad');
+      }catch(e){
+        alert('ورودی نامعتبر!');
+      }
+    }
+  </script>
+</body>
+</html>
